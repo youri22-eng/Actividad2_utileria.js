@@ -106,8 +106,8 @@ button:hover {
     background: rgb(246, 255, 0);
     padding: 28px;
   
-    width: 90%;           /* Se adapta mejor a pantallas pequeñas */
-    max-width: 450px;     /* Hace la caja más grande y espaciosa */
+    width: 90%;           
+    max-width: 450px;     
     text-align: center;
     position: relative;
 }
@@ -116,11 +116,11 @@ button:hover {
     position: static;
     top: 12px;
     right: 16px;
-    background: #e7fc00;  /* Quita el fondo morado o predeterminado */
+    background: #e7fc00;  
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-    color: white;               /* Color gris para la X */
+    color: white;             
     padding: 0;
     line-height: 1;
     outline: none;             
@@ -130,6 +130,7 @@ button:hover {
 .modal-cerrar:hover {
     color: rgb(236, 0, 0);
 }
+
 
 
 
