@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Utileria JS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="tarjeta">
+    <h1>Iniciar sesion</h1>
+
+    <form id="formLogin">
+      <div class="campo">
+        <label for="correo">Correo electronico</label>
+        <input type="text" id="correo" placeholder="ejemplo@correo.com">
+        <p class="mensaje-error" id="errorCorreo"></p>
+      </div>
+
+      <div class="campo">
+        <label for="password">Contrasena</label>
+        <input type="password" id="password" placeholder="********">
+        <p class="mensaje-error" id="errorPassword"></p>
+      </div>
+
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <p class="enlace"><a href="index.html">No tengo cuenta, ir a registro</a></p>
+  </main>
+
+  <div id="modalBienvenida" class="modal oculto">
+    <div class="modal-caja">
+      <button class="modal-cerrar" id="btnCerrarModal">&times;</button>
+      <img id="imagenAvatar" src="" alt="Avatar del usuario" class="avatar">
+      <h2 id="modalTitulo"></h2>
+      <p id="modalTexto">Has iniciado sesion correctamente.</p>
+    </div>
+  </div>
+
+  <script src="js/utileria.js"></script>
+  <script>
+    var formLogin = document.getElementById("formLogin");
+
+    formLogin.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+
+      var correoInput = document.getElementById("correo");
+      var correoSinRecortar = correoInput.value;
+      var correo = correoSinRecortar.trim();
+
+      var passwordInput = document.getElementById("password");
+      var password = passwordInput.value;
+
+      var errorCorreo = document.getElementById("errorCorreo");
+      var errorPassword = document.getElementById("errorPassword");
+
+      var formularioValido = true;
+
+      if (validarCorreo(correo) === true) {
+        errorCorreo.textContent = "";
+      } else {
+        errorCorreo.textContent = "El formato de correo no es valido.";
+        formularioValido = false;
+      }
+
+      if (validarPassword(password) === true) {
+        errorPassword.textContent = "";
+      } else {
+        errorPassword.textContent = "Minimo 8 caracteres, con mayuscula, minuscula, numero y caracter especial.";
+        formularioValido = false;
+      }
+
+      if (formularioValido === true) {
+        var nombreUsuario = obtenerNombreDeUsuario(correo);
+        var primeraLetra = nombreUsuario.charAt(0);
+        var rutaAvatar = obtenerAvatarPorLetra(primeraLetra);
+
+        var imagenAvatar = document.getElementById("imagenAvatar");
+        imagenAvatar.src = rutaAvatar;
+
+        var modalTitulo = document.getElementById("modalTitulo");
+        modalTitulo.textContent = "Bienvenido, " + nombreUsuario;
+
+        var modalBienvenida = document.getElementById("modalBienvenida");
+        modalBienvenida.classList.remove("oculto");
+      }
+    });
+
+    var btnCerrarModal = document.getElementById("btnCerrarModal");
+
+    btnCerrarModal.addEventListener("click", function () {
+      var modalBienvenida = document.getElementById("modalBienvenida");
+      modalBienvenida.classList.add("oculto");
+    });
+  </script>
+</body>
+</html>

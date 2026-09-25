@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Utileria JS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="tarjeta">
+    <h1>Crear cuenta</h1>
+
+    <form id="formRegistro">
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Ej. Ana Lopez">
+        <p class="mensaje-error" id="errorNombre"></p>
+      </div>
+
+      <div class="campo">
+        <label for="telefono">Telefono (maximo 10 digitos)</label>
+        <input type="text" id="telefono" placeholder="Ej. 9511234567">
+        <p class="mensaje-error" id="errorTelefono"></p>
+      </div>
+
+      <div class="campo">
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fechaNacimiento">
+        <p class="mensaje-error" id="errorFecha"></p>
+      </div>
+
+      <button type="submit">Registrar</button>
+    </form>
+
+    <p class="enlace"><a href="login.html">Ya tengo cuenta, ir al login</a></p>
+  </main>
+
+  <script src="js/utileria.js"></script>
+  <script>
+    var formRegistro = document.getElementById("formRegistro");
+
+    formRegistro.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+
+      var nombreInput = document.getElementById("nombre");
+      var nombreSinRecortar = nombreInput.value;
+      var nombre = nombreSinRecortar.trim();
+
+      var telefonoInput = document.getElementById("telefono");
+      var telefonoSinRecortar = telefonoInput.value;
+      var telefono = telefonoSinRecortar.trim();
+
+      var fechaInput = document.getElementById("fechaNacimiento");
+      var fecha = fechaInput.value;
+
+      var errorNombre = document.getElementById("errorNombre");
+      var errorTelefono = document.getElementById("errorTelefono");
+      var errorFecha = document.getElementById("errorFecha");
+
+      var formularioValido = true;
+
+      if (soloLetras(nombre) === true) {
+        errorNombre.textContent = "";
+      } else {
+        errorNombre.textContent = "Ingresa solo letras y espacios.";
+        formularioValido = false;
+      }
+
+      if (validarLongitud(telefono, 10) === true) {
+        errorTelefono.textContent = "";
+      } else {
+        errorTelefono.textContent = "Ingresa solo numeros, maximo 10 digitos.";
+        formularioValido = false;
+      }
+
+      if (fecha !== "") {
+        if (esMayorDeEdad(fecha) === true) {
+          errorFecha.textContent = "";
+        } else {
+          errorFecha.textContent = "Debes ser mayor de edad para registrarte.";
+          formularioValido = false;
+        }
+      } else {
+        errorFecha.textContent = "Debes ser mayor de edad para registrarte.";
+        formularioValido = false;
+      }
+
+      if (formularioValido === true) {
+        var edad = calcularEdad(fecha);
+        alert("Registro exitoso. Tienes " + edad + " anios. Ahora seras enviado al login.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>
